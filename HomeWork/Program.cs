@@ -12,8 +12,8 @@ namespace Task1
         static void Main(string[] args)
         {
             int k; // Количество выполненных заданий
-            float HoursWorked = default;
-            float Avg = default;
+            float HoursWorked = default; // Количество отработанных часов 
+            float Avg = default; // Среднее затраченное время на одну задачу
 
             // Обращаемся к первой записи в логе
             Log.First();

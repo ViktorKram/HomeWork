@@ -11,14 +11,15 @@ namespace Task2
     {
         static void Main(string[] args)
         {
+
         }
 
         internal string FormatFilePath(string FilePath, string Mask)
         {
-            string Disc;
-            string Directory;
-            string FileName;
-            string Extension;
+            string disc;
+            string directory;
+            string fileName;
+            string extension;
 
             // Удалить ведущие и хвостовые пробелы
             FilePath = FilePath.Trim();
@@ -27,16 +28,16 @@ namespace Task2
             {
                 // В полном имени файла FilePath найти: 
                 // 1) имя диска (не работает, если FilePath - сетевой путь) 
-                Disc = Regex.Match(FilePath, @"^([A-Z]{1}):\\").ToString();
+                disc = Regex.Match(FilePath, @"^([A-Z]{1}):\\").ToString();
 
                 // 2) директорию
-                Directory = Regex.Match(FilePath, @"^[A-Z]{1}:\\(.*)\\[^\\]+").ToString();
+                directory = Regex.Match(FilePath, @"^[A-Z]{1}:\\(.*)\\[^\\]+").ToString();
 
                 // 3) имя файла
-                FileName = Regex.Match(FilePath, @"^[A-Z]{1}:\\.*\\([^\\]+)\.[^\.\\]+$").ToString();
+                fileName = Regex.Match(FilePath, @"^[A-Z]{1}:\\.*\\([^\\]+)\.[^\.\\]+$").ToString();
 
                 // 4) расширение файла
-                Extension = Regex.Match(FilePath, @"^[A-Z]{1}:\\.*\\[^\\]+\.([^\.\\]+)$").ToString();
+                extension = Regex.Match(FilePath, @"^[A-Z]{1}:\\.*\\[^\\]+\.([^\.\\]+)$").ToString();
             }
             catch (Exception)
             {
@@ -47,16 +48,16 @@ namespace Task2
             // в строку, как указано в маске Mask
 
             // Заменить %D на имя диска
-            Mask.Replace("%D", Disc);
+            Mask.Replace("%D", disc);
 
             // Заменить %P на путь
             Mask.Replace("%P", FilePath);
 
             // Заменить %N на имя файла
-            Mask.Replace("%N", FileName);
+            Mask.Replace("%N", fileName);
 
             // Заменить %E на расширение
-            Mask.Replace("%E", Extension);
+            Mask.Replace("%E", extension);
 
             return Mask;
         }
