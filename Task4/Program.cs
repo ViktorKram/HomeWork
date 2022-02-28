@@ -125,9 +125,9 @@ namespace Task4
                         finalSums.Reverse();
 
                         // Передадим значения из списка в строку на вывод.
-                        foreach (string lSum in finalSums)
+                        foreach (string finalSum in finalSums)
                         {
-                            result.Append(lSum + ";");
+                            result.Append(finalSum + ";");
                         }
 
                         //Вернем строку, удалив в конце ";". 
