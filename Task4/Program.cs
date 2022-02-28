@@ -6,14 +6,21 @@ using System.Threading.Tasks;
 
 namespace Task4
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-           
         }
 
-        static string DistributeTheAmount(string option, double sum, string proportions)
+        /// <summary>
+        /// Распределяет указанную сумму согласно выбранной опции и полученным пропорциям.
+        /// Опции: ПРОП (пропорционально), ПЕРВ (в счет первых), ПОСЛ (в счет последних).
+        /// </summary>
+        /// <param name="option"></param>
+        /// <param name="sum"></param>
+        /// <param name="values"></param>
+        /// <returns>Строка с частями суммы, разделенными ";".</returns>
+       public static string DistributeTheSum(string option, double sum, string values)
         {
             if (double.IsNaN(sum))
                 throw new ArgumentException("Your sum is NaN.");
@@ -25,28 +32,28 @@ namespace Task4
             {
                 StringBuilder result = new StringBuilder();
                 List<string> finalSums = new List<string>();
-                double[] propArray = proportions.Split(';').Select(x => double.Parse(x)).ToArray();
+                double[] valuesArray = values.Split(';').Select(x => double.Parse(x)).ToArray();
 
                 switch (option)
                 {
                     // Разработаем сценарий для пропорционального распределения суммы.
                     case "ПРОП":
-                        // Определим общую сумму значений из списка пропорций.
-                        double proportionSum = 0;
+                        // Определим общую сумму переданных значений.
+                        double valuesSum = 0;
 
-                        foreach (double prop in propArray)
+                        foreach (double prop in valuesArray)
                         {
-                            proportionSum += prop;
+                            valuesSum += prop;
                         }
 
-                        // Определим количество денег, соответствующей 1 единице пропорций.
-                        double moneyProportion = sum / proportionSum;
+                        // Определим количество денег, соответствующей 1 единице пропорции.
+                        double moneyProportion = sum / valuesSum;
 
                         // Для каждой, кроме последней пропорции из списка найдем соответствующую сумму и добавим ее в список,
                         // округляя до копеек (сотых).
-                        for (int i = 0; i < propArray.Length - 1; i++)
+                        for (int i = 0; i < valuesArray.Length - 1; i++)
                         {
-                            finalSums.Add((moneyProportion * propArray[i]).ToString("#.##"));
+                            finalSums.Add((moneyProportion * valuesArray[i]).ToString("#.##"));
                         }
 
                         // Определим оставшуюся сумму.  
@@ -55,24 +62,25 @@ namespace Task4
                             sum -= double.Parse(pSum);
                         }
 
-                        // Добавим остаток как последнее значение списка.
+                        // Добавим остаток как последнюю часть суммы.
                         finalSums.Add(sum.ToString());
 
                         // Передадим значения из списка в строку на вывод.
-                        foreach (string lSum in finalSums)
+                        foreach (string innerSum in finalSums)
                         {
-                            result.Append(lSum + ";");
+                            result.Append(innerSum + ";");
                         }
 
                         //Вернем строку, удалив в конце ";". 
                         return result.Remove(result.Length - 1, 1).ToString();
 
+                    // Разработает сценарий для распределения суммы в счет первых значений. 
                     case "ПЕРВ":
                         //Начнем заполнять результирующую строку максимальными значениями с начала списка.
-                        for (int i = 0; i < propArray.Length; i++)
+                        for (int i = 0; i < valuesArray.Length; i++)
                         {
                             // Если кол-во оставшихся денег меньше или равно значению в списке, добавляем остатки и устанавливаем количество денег в ноль.
-                            if (sum <= propArray[i])
+                            if (sum <= valuesArray[i])
                             {
                                 finalSums.Add(sum.ToString());
                                 sum = 0;
@@ -80,26 +88,27 @@ namespace Task4
                             // Иначе, добавляем значение из списка в результат и вычитаем это значение из общего кол-ва денег.
                             else
                             {
-                                finalSums.Add(propArray[i].ToString());
-                                sum -= propArray[i];
+                                finalSums.Add(valuesArray[i].ToString());
+                                sum -= valuesArray[i];
                             }
                         }
 
                         // Передадим значения из списка в строку на вывод.
-                        foreach (string lSum in finalSums)
+                        foreach (string innerSum in finalSums)
                         {
-                            result.Append(lSum + ";");
+                            result.Append(innerSum + ";");
                         }
 
                         //Вернем строку, удалив в конце ";". 
                         return result.Remove(result.Length - 1, 1).ToString();
 
+                    // Разработает сценарий для распределения суммы в счет последних значений. 
                     case "ПОСЛ":
                         //Начнем заполнять результирующую строку максимальными значениями с конца списка.
-                        for (int i = propArray.Length - 1; i >= 0; i--)
+                        for (int i = valuesArray.Length - 1; i >= 0; i--)
                         {
                             // Если кол-во оставшихся денег меньше или равно значению в списке, добавляем остатки и устанавливаем количество денег в ноль.
-                            if (sum <= propArray[i])
+                            if (sum <= valuesArray[i])
                             {
                                 finalSums.Add(sum.ToString());
                                 sum = 0;
@@ -107,11 +116,12 @@ namespace Task4
                             // Иначе, добавляем значение из списка в результат и вычитаем это значение из общего кол-ва денег.
                             else
                             {
-                                finalSums.Add(propArray[i].ToString());
-                                sum -= propArray[i];
+                                finalSums.Add(valuesArray[i].ToString());
+                                sum -= valuesArray[i];
                             }
                         }
 
+                        // Синхронизируем суммы из списка со значениями из строки.
                         finalSums.Reverse();
 
                         // Передадим значения из списка в строку на вывод.
@@ -125,7 +135,7 @@ namespace Task4
                 }
             }
 
-            return "Invalid option. Please, try again.";
+            throw new ArgumentException("Invalid option.");
         }
     }
 }
