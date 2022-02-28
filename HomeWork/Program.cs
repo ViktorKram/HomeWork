@@ -16,31 +16,30 @@ namespace Task1
     {
         public static void First()
         {
-
+            throw new NotImplementedException();
         }
 
         public static bool EOF()
         {
-            return false;
+            throw new NotImplementedException();
         }
 
         public static void Next()
         {
-
+            throw new NotImplementedException();
         }
 
         public static string Fields(string fieldName)
         {
-            return fieldName;
+            throw new NotImplementedException();
         }
     }
 
     public class Report
     {
-        static string text = "Some text";
         public static ref string Fields(string fieldName)
         {
-            return ref text;
+            throw new NotImplementedException();
         }
     }
 
