@@ -7,6 +7,43 @@ using System.Text.RegularExpressions;
 
 namespace Task1
 {
+    public class User
+    {
+        public static string Name { get; set; }
+    }
+
+    public class Log
+    {
+        public static void First()
+        {
+
+        }
+
+        public static bool EOF()
+        {
+            return false;
+        }
+
+        public static void Next()
+        {
+
+        }
+
+        public static string Fields(string fieldName)
+        {
+            return fieldName;
+        }
+    }
+
+    public class Report
+    {
+        static string text = "Some text";
+        public static ref string Fields(string fieldName)
+        {
+            return ref text;
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -28,7 +65,7 @@ namespace Task1
                 if (Log.Fields("UserName") == User.Name)
                 {
                     // Добавим к переменной HoursWorked длительность текущей работы.
-                    HoursWorked += Log.Fields("Duration");
+                    HoursWorked += float.Parse(Log.Fields("Duration"));
                     k++;
                 }
 
@@ -51,7 +88,7 @@ namespace Task1
             Report.Fields("RightMargin") = "1см";
             Report.Fields("TopMargin") = "1см";
             Report.Fields("BottomMargin") = "1см";
-        }        
+        }
     }
 }
 

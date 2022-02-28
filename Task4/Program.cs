@@ -13,7 +13,7 @@ namespace Task4
         }
 
         /// <summary>
-        /// Распределяет указанную сумму согласно выбранной опции и полученным пропорциям.
+        /// Распределяет указанную сумму согласно выбранной опции и полученным значениям.
         /// Опции: ПРОП (пропорционально), ПЕРВ (в счет первых), ПОСЛ (в счет последних).
         /// </summary>
         /// <param name="option"></param>
@@ -26,8 +26,8 @@ namespace Task4
                 throw new ArgumentException("Your sum is NaN.");
             else if (double.IsPositiveInfinity(sum))
                 throw new ArgumentException("Your sum is positive infinity.");
-            else if (sum < 0)
-                throw new ArgumentException("Your sum is less than zero.");
+            else if (sum <= 0)
+                throw new ArgumentException("Your sum is less than or equal to zero.");
             else
             {
                 StringBuilder result = new StringBuilder();
@@ -41,9 +41,9 @@ namespace Task4
                         // Определим общую сумму переданных значений.
                         double valuesSum = 0;
 
-                        foreach (double prop in valuesArray)
+                        foreach (double innerValue in valuesArray)
                         {
-                            valuesSum += prop;
+                            valuesSum += innerValue;
                         }
 
                         // Определим количество денег, соответствующей 1 единице пропорции.
